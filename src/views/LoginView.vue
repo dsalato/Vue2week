@@ -1,14 +1,14 @@
 <template>
   <div>
-    <form>
+    <form @submit.prevent="login">
       <h1>Вход</h1>
       <div class="form_data">
-        <label>Email</label>
-        <input type="email" placeholder="Email">
+        <label for="username">Email</label>
+        <input id="username" v-model="email" type="email" placeholder="Email">
       </div>
       <div class="form_data">
-        <label>Password</label>
-        <input type="password" placeholder="Password">
+        <label for="password">Password</label>
+        <input id="password" v-model="password" type="password" placeholder="Password">
       </div>
       <button>Войти</button>
 
@@ -22,12 +22,20 @@ export default {
   name: "LoginView",
   data(){
     return {
-      login : null,
+      email : null,
       password : null,
 
     }
   },
   methods: {
+    login() {
+      const userData = {
+        email: JSON.parse(JSON.stringify(this.email)),
+        password: JSON.parse(JSON.stringify(this.password)),
+      };
+      this.$store
+          .dispatch('login', userData)
+    },
 
   }
 

@@ -1,9 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CatalogView from "@/views/CatalogView.vue";
 import RegisterView from "@/views/RegisterView.vue";
+import OrderView from '../views/OrderView.vue'
 import LoginView from "@/views/LoginView.vue";
 import BasketView from "@/views/BasketView.vue";
-import OrderView from "@/views/OrderView.vue";
+import store from '../store'
+
+
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/')
+}
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuthenticated) {
+    next()
+    return
+  }
+  next('/login')
+}
 
 const routes = [
   {
@@ -13,7 +31,8 @@ const routes = [
   {
     path: '/catalog',
     name: 'catalog',
-    component: CatalogView
+    component: CatalogView,
+    beforeEnter: ifAuthenticated
   },
   {
     path: '/register',
@@ -23,7 +42,8 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: LoginView,
+    beforeEnter: ifNotAuthenticated
   },
   {
     path: '/basket',
