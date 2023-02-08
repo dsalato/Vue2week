@@ -35,7 +35,6 @@ const routes = [
     name: 'order',
     component: OrderView
   },
-
 ]
 
 const router = createRouter({

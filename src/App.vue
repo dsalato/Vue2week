@@ -22,7 +22,7 @@ export default {
 }
 
 nav {
-  padding: 30px;
+  padding: 0;
 }
 
 nav a {
@@ -31,7 +31,7 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: cornflowerblue;
+  color: #4CAF50;
 }
 </style>
 
