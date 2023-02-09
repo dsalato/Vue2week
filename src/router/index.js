@@ -32,7 +32,7 @@ const routes = [
     path: '/catalog',
     name: 'catalog',
     component: CatalogView,
-    beforeEnter: ifAuthenticated
+
   },
   {
     path: '/register',
@@ -48,12 +48,14 @@ const routes = [
   {
     path: '/basket',
     name: 'basket',
-    component: BasketView
+    component: BasketView,
+    beforeEnter: ifAuthenticated
   },
   {
     path: '/order',
     name: 'order',
-    component: OrderView
+    component: OrderView,
+    beforeEnter: ifAuthenticated
   },
 ]
 

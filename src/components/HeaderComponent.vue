@@ -6,16 +6,33 @@
       <router-link to="basket">Корзина</router-link>
       <router-link to="order">Заказы</router-link>
     </nav>
-    <nav>
-      <router-link to="login">Вход</router-link>|<router-link to="register">Регистрация</router-link>
+    <nav v-show="!this.$store.getters.isAuthenticated">
+      <router-link to="login" @click="register">Вход</router-link>|<router-link to="register">Регистрация</router-link>
     </nav>
+    <nav v-show="this.$store.getters.isAuthenticated">
+      <router-link to="logout" @click="logout">Выход</router-link>
+      <a class="navbar-link" href="#">
+        Корзина ({{ $store.state.cartCount }})
+      </a>
+    </nav>
+
 
   </div>
 </template>
 
 <script>
 export default {
-  name: "HeaderComponent"
+  name: "HeaderComponent",
+  data(){
+    return {
+      registers: false
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout')
+    },
+  }
 }
 </script>
 
