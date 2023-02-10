@@ -5,7 +5,7 @@
           <h3>Оформить заказ</h3>
           <p>В корзине: {{$store.state.cart.length}} товаров</p>
           <p>Общая сумма заказа:  {{ fullSum }}</p>
-          <button class="btn_order">Оформить</button>
+          <button class="btn_order" @click="toCard">Оформить</button>
         </div>
         <div class="basket_inner" v-if="$store.state.cart.length > 0">
           <basket-component></basket-component>
@@ -32,6 +32,11 @@ export default {
   data() {
     return {
       summ: 0
+    }
+  },
+  methods:{
+    toCard(){
+      this.$store.dispatch('to_order')
     }
   },
   computed: {

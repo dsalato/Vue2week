@@ -4,7 +4,7 @@
     <nav>
       <router-link to="catalog">Каталог</router-link>
       <router-link @click="toCart" to="basket">Корзина</router-link>
-      <router-link to="order">Заказы</router-link>
+      <router-link to="order" @click="toOrder">Заказы</router-link>
     </nav>
     <nav v-show="!this.$store.getters.isAuthenticated">
       <router-link to="login" @click="register">Вход</router-link>|<router-link to="register">Регистрация</router-link>
@@ -34,6 +34,9 @@ export default {
     },
     toCart() {
       this.$store.dispatch('get_cart')
+    },
+    toOrder() {
+      this.$store.dispatch('get_order')
     }
   }
 }

@@ -1,5 +1,7 @@
 <template>
-  <div><h1>Заказы</h1></div>
+  <div class="basket_inner" v-for="basket in $store.state.order">
+      {{basket}}
+  </div>
 </template>
 
 <script>

@@ -8,6 +8,7 @@ export default createStore({
     typeToken: 'Bearer ',
     API: 'https://jurapro.bhuser.ru/api-shop/',
     cart: [],
+    order: [],
     cartCount: 0,
 
   },
@@ -21,17 +22,17 @@ export default createStore({
     auth_success: (state, token) => {
       state.token = token
     },
-    cart_update: (state, payload) => {
-      state.cart = payload
-      state.cartCount = payload.length
+    cart_update: (state, load) => {
+      state.cart = load
+      state.cartCount = load.length
     },
-    order_update:(state) => {
-
+    order_update:(state, load) => {
+      state.order = load
     }
   },
   actions: {
     async to_order({commit}) {
-      await axios.post(this.state.API + 'order/' , {}, {headers: {Authorization: this.state.typeToken + this.state.token}})
+      await axios.post(this.state.API + 'order' , {}, {headers: {Authorization: this.state.typeToken + this.state.token}})
     },
     async get_order({commit}) {
       await axios.get(this.state.API + 'order', {headers: {Authorization: this.state.typeToken + this.state.token}})
@@ -39,6 +40,7 @@ export default createStore({
             commit('order_update', response.data.data)
           })
     },
+
     async to_cart({commit}, product_id) {
       await axios.post(this.state.API + 'cart/' + product_id,  {}, {headers: {Authorization: this.state.typeToken + this.state.token}})
     },
