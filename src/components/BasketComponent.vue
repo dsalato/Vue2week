@@ -4,7 +4,6 @@
       <button @click="remove_cart(basket)">&times</button>
       <h2>{{basket.name}}</h2>
       <p class="price">Цена: {{basket.price}}</p>
-      <p class="count">Количество: </p>
     </div>
 </template>
 
@@ -57,10 +56,5 @@ p{
   bottom:10px;
   right:30px;
 }
-.count{
-  position: absolute;
-  z-index: 3;
-  bottom:10px;
-  left:30px;
-}
+
 </style>
