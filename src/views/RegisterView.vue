@@ -4,15 +4,15 @@
       <h1>Регистрация</h1>
       <div class="form_data">
         <label for="fio">ФИО</label>
-        <input id="fio" v-model="fio" type="text" placeholder="ФИО">
+        <input id="fio" v-model="fio" required type="text" placeholder="ФИО">
       </div>
       <div class="form_data">
         <label for="username">Почта</label>
-        <input id="username" v-model="email" type="text" placeholder="Почта">
+        <input id="username" v-model="email" required type="text" placeholder="Почта">
       </div>
       <div class="form_data">
         <label for="password">Пароль</label>
-        <input id="password" v-model="password" type="password" placeholder="Пароль">
+        <input id="password" v-model="password" required type="password" placeholder="Пароль">
       </div>
       <button type="submit">Войти</button>
 

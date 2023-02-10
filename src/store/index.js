@@ -26,6 +26,10 @@ export default createStore({
       state.cart = load
       state.cartCount = load.length
     },
+    cart_chach: (state, load) => {
+      state.cart = []
+      state.cartCount = 0
+    },
     order_update:(state, load) => {
       state.order = load
     }
@@ -33,6 +37,9 @@ export default createStore({
   actions: {
     async to_order({commit}) {
       await axios.post(this.state.API + 'order' , {}, {headers: {Authorization: this.state.typeToken + this.state.token}})
+          .then((response) => {
+            commit('cart_chach', response.data.data)
+          })
     },
     async get_order({commit}) {
       await axios.get(this.state.API + 'order', {headers: {Authorization: this.state.typeToken + this.state.token}})
