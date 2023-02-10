@@ -4,7 +4,7 @@
         <div class="order">
           <h3>Оформить заказ</h3>
           <p>В корзине: {{$store.state.cart.length}} товаров</p>
-          <p>Общая сумма заказа:  </p>
+          <p>Общая сумма заказа:  {{ fullSum }}</p>
           <button class="btn_order">Оформить</button>
         </div>
         <div class="basket_inner" v-if="$store.state.cart.length > 0">
@@ -29,6 +29,20 @@ import BasketComponent from "@/components/BasketComponent";
 export default {
   name: "BasketView",
   components:{BasketComponent, ProductComponent},
+  data() {
+    return {
+      summ: 0
+    }
+  },
+  computed: {
+    fullSum() {
+      this.summ = 0
+      this.$store.state.cart.forEach(card => {
+        this.summ += card.price
+      })
+      return this.summ
+    }
+  }
 }
 </script>
 

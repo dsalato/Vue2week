@@ -25,8 +25,20 @@ export default createStore({
       state.cart = payload
       state.cartCount = payload.length
     },
+    order_update:(state) => {
+
+    }
   },
   actions: {
+    async to_order({commit}) {
+      await axios.post(this.state.API + 'order/' , {}, {headers: {Authorization: this.state.typeToken + this.state.token}})
+    },
+    async get_order({commit}) {
+      await axios.get(this.state.API + 'order', {headers: {Authorization: this.state.typeToken + this.state.token}})
+          .then((response) => {
+            commit('order_update', response.data.data)
+          })
+    },
     async to_cart({commit}, product_id) {
       await axios.post(this.state.API + 'cart/' + product_id,  {}, {headers: {Authorization: this.state.typeToken + this.state.token}})
     },
