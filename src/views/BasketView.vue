@@ -1,14 +1,24 @@
 <template>
-  <div>
-    <div class="basket_inner" v-if="$store.state.cart.length > 0">
-      <basket-component></basket-component>
-    </div>
+  <div class="basket">
 
-    <div v-else>
-      <a href="">
-        Корзина пуста
-      </a>
-    </div>
+        <div class="order">
+          <h3>Оформить заказ</h3>
+          <p>В корзине: {{$store.state.cart.length}} товаров</p>
+          <p>Общая сумма заказа:  </p>
+          <button class="btn_order">Оформить</button>
+        </div>
+        <div class="basket_inner" v-if="$store.state.cart.length > 0">
+          <basket-component></basket-component>
+        </div>
+
+        <div v-else>
+          <a href="">
+            Корзина пуста
+          </a>
+        </div>
+
+
+
   </div>
 </template>
 
@@ -22,14 +32,29 @@ export default {
 }
 </script>
 
-<style scoped>
-div {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  max-width: 1200px;
+<style>
+.basket{
+  position: relative;
 }
-.basket_inner{
-  width: 41%;
+.order{
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  right: 160px;
+  display: inline-block;
+  border: 2px solid darkolivegreen;
+  padding: 20px 40px;
+  width: 250px;
+
+}
+.btn_order{
+  text-align: center;
+  width: 50%;
+  height: 15%;
+  background-color: bisque;
+  border: 1px solid rgba(114, 211, 49, 0.4);
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px 0;
 }
 </style>

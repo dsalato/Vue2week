@@ -4,7 +4,8 @@ import router from "@/router";
 
 export default createStore({
   state: {
-    token: localStorage.getItem('MyAppToken'),
+    token: localStorage.getItem('MyToken'),
+    typeToken: 'Bearer ',
     API: 'https://jurapro.bhuser.ru/api-shop/',
     cart: [],
     cartCount: 0,
@@ -17,37 +18,50 @@ export default createStore({
     AUTH_ERROR: (state) => {
       state.token = '';
     },
-    addToCart(state, item) {
-      state.cart.push(item);
-      console.log(state.cart)
-      console.log(item)
-      state.cartCount++;
-    }
+    auth_success: (state, token) => {
+      state.token = token
+    },
+    cart_update: (state, payload) => {
+      state.cart = payload
+      state.cartCount = payload.length
+    },
   },
   actions: {
+    async to_cart({commit}, product_id) {
+      await axios.post(this.state.API + 'cart/' + product_id,  {}, {headers: {Authorization: this.state.typeToken + this.state.token}})
+    },
+    async get_cart({commit}) {
+      await axios.get(this.state.API + 'cart', {headers: {Authorization: this.state.typeToken + this.state.token}})
+          .then((response) => {
+            commit('cart_update', response.data.data)
+          })
+    },
+    async remove_cart({commit}, product_id) {
+      await axios.delete(this.state.API + 'cart/' + product_id,  {headers: {Authorization: this.state.typeToken + this.state.token}})
+    },
     async login({commit}, user) {
       console.log(commit)
       try {
         await axios.post(this.state.API + 'login', user).then((response) => {
           this.state.token = response.data.data.user_token
           localStorage.setItem('MyAppToken', this.state.token)
-          axios.defaults.headers = {Authorisation: this.state.token}
+          axios.defaults.headers = {Authorisation: this.state.typeToken + this.state.token}
           console.log(this.state.token)
           router.push('/')
         })
       } catch (e) {
         console.log(e)
         commit('AUTH_ERROR');
-        localStorage.removeItem('MyAppToken');
+        localStorage.removeItem('MyToken');
       }
     },
     async register({commit}, user) {
       console.log(commit)
       try {
         await axios.post(this.state.API + 'signup', user).then((response) => {
-          this.state.token = response.data.data.token
-          localStorage.setItem('MyAppToken', this.state.token)
-          axios.defaults.headers = {Authorisation: this.state.token}
+          this.state.token = response.data.data.user_token
+          localStorage.setItem('MyToken', this.state.token)
+          axios.defaults.headers = {Authorisation: this.state.typeToken + this.state.token}
           router.push('/')
         })
       } catch (e) {
@@ -57,7 +71,7 @@ export default createStore({
       }
     },
     async logout(){
-      localStorage.removeItem('MyAppToken', this.state.token)
+      localStorage.removeItem('MyToken', this.state.token)
       this.state.token = '';
       await axios.get(this.state.API + 'logout')
     }

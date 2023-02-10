@@ -14,8 +14,10 @@ export default {
   name: "ProductComponent",
   props: ['prodData'],
   methods: {
-    addToCart(item) {
-      this.$store.commit('addToCart', item);
+    addToCart(card) {
+      this.$store.dispatch('to_cart', card.id)
+      this.$store.dispatch('get_cart')
+
     }
   }
 }

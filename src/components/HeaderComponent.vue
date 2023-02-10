@@ -3,7 +3,7 @@
     <h2>Просто купить</h2>
     <nav>
       <router-link to="catalog">Каталог</router-link>
-      <router-link to="basket">Корзина</router-link>
+      <router-link @click="toCart" to="basket">Корзина</router-link>
       <router-link to="order">Заказы</router-link>
     </nav>
     <nav v-show="!this.$store.getters.isAuthenticated">
@@ -32,6 +32,9 @@ export default {
     logout() {
       this.$store.dispatch('logout')
     },
+    toCart() {
+      this.$store.dispatch('get_cart')
+    }
   }
 }
 </script>

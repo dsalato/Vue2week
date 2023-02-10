@@ -1,31 +1,49 @@
 <template>
-  <div v-if="$store.state.cart.length > 0">
+
     <div class="basket_inner" v-for="basket in $store.state.cart">
+      <button @click="remove_cart(basket)">&times</button>
       <h2>{{basket.name}}</h2>
-      <p>Цена: {{basket.price}}</p>
-      <p>Количество: </p>
+      <p class="price">Цена: {{basket.price}}</p>
+      <p class="count">Количество: </p>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
   name: "BasketComponent",
+  methods:{
+    remove_cart(card){
+      this.$store.dispatch('remove_cart', card.id)
+      this.$store.dispatch('get_cart')
+    }
+  },
+
 }
 </script>
 
 <style scoped>
 .basket_inner{
-  height: 200px;
-  width: 400px;
+  height: 100px;
+  width: 23%;
   background-color: rgba(114, 211, 49, 0.3);
-  padding: 20px 30px 30px 30px;
+  padding: 10px 30px 30px 30px;
   margin: 10px auto;
+  position: relative;
 
 }
-
+button{
+  position: absolute;
+  z-index: 3;
+  top:25px;
+  right:10px;
+  background-color: darkolivegreen;
+  color: white;
+  border-radius: 50%;
+  font-width:bold;
+  border: 1px solid gainsboro;
+}
 h2{
-  font-size: 20px;
+  font-size: 18px;
   color: rgba(29, 31, 27, 1);
 
 }
@@ -36,7 +54,13 @@ p{
 .price{
   position: absolute;
   z-index: 3;
-  bottom:-10px;
-  left:0;
+  bottom:10px;
+  right:30px;
+}
+.count{
+  position: absolute;
+  z-index: 3;
+  bottom:10px;
+  left:30px;
 }
 </style>
